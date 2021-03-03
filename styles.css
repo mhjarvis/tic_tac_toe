@@ -1,0 +1,37 @@
+body {
+    text-align: center;
+    width: 100%;
+}
+h1 {
+    font-size: 4em;
+}
+#player1, #player2 {
+    display: inline-block;
+    font-size: 1.5em;
+    margin: 100px 20px 20px 20px;
+    padding: 10px 20px 10px 20px;
+    border: solid 1px black;
+}
+#player1 {
+    background-color: green;
+}
+#player2 {
+    background-color: red;
+}
+#container {
+    display: grid;
+    grid-gap: 15px 15px;
+    width: 480px;
+    height: 480px;
+    grid-template-columns: repeat(3, auto);
+    background-color: rgb(107, 104, 104);
+    margin: 50px auto 0 auto;
+}
+.box {
+    text-align: center;
+    line-height: 150px;
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    
+}
