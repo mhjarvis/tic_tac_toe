@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 body {
     text-align: center;
     width: 100%;
-    
+
 }
 h1 {
     font-size: 4em;
@@ -25,14 +26,19 @@ h1 {
     width: 480px;
     height: 480px;
     grid-template-columns: repeat(3, auto);
-    background-color: rgb(107, 104, 104);
+    background-color: rgb(82, 71, 71);
     margin: 50px auto 0 auto;
 }
 .box {
+    font-size: 7em;
     text-align: center;
     line-height: 150px;
     width: 150px;
     height: 150px;
+    color:rgb(107, 104, 104);
     background-color: white;
-    
+    font-family: 'Fredoka One', cursive;    
+}
+.box:hover {
+    background-color: rgb(223, 215, 215);
 }
