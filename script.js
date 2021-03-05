@@ -64,6 +64,9 @@ const gameController = (() => {         //build game controller with module patt
     const player2 = Player("Player 2", "O");
     let currentPlayer = whoGoesFirst();            //'player1' or 'player2'
     const box = document.querySelectorAll('.box');
+    const message = document.getElementById('message');
+    playerTurnDisplay(currentPlayer.name);
+    message.innerText = " ";
 
     console.log(currentPlayer);
 
@@ -73,15 +76,33 @@ const gameController = (() => {         //build game controller with module patt
             if(box.innerText == ""){                //test box for current value
                 let currentPlayer = getCurrentPlayer();
                 addMarker(box.id, currentPlayer);
-                checkWin(currentPlayer, currentPlayer.marker);
-                updateCurrentPlayer();
+                let isWinner = checkWin(currentPlayer.marker);
+                if(isWinner == true) {
+                    message.innerText = currentPlayer.name + " won the game!";
+                } 
+                else if(checkForTie() == true) {
+                    message.innerText = "It's a tie!";
+                }
+                else {
+                    updateCurrentPlayer();
+                }
             } else {
                 return;
             }
         })
     })
-
-    function checkWin(player, marker) {
+    function checkForTie() {
+        let board = Gameboard.getGameBoard();
+        let tie = false;
+        for(let i = 0; i < 9; i++) {
+            if(board[i] == "") {
+                return;
+            } else {
+                return true;
+            }
+        }
+    }
+    function checkWin(marker) {
         let board = Gameboard.getGameBoard();
         let test = [];
         for(let i = 0; i < 9; i++) {
@@ -89,31 +110,17 @@ const gameController = (() => {         //build game controller with module patt
                 test.push(i);
             }
         }
-
         for(let j = 0; j < 8; j++) {
             let arr = winningValues[j];
             let ans = isTrue(arr, test)
             if(ans == true) {
-                console.log(player + "IS THE WINNER!");
-                
+                return true;                
             }
         }
     }
-    
     function isTrue(arr, arr2){
         return arr.every(i => arr2.includes(i));
       }
-
-    // box.forEach((box) => {
-    //     box.addEventListener('mouseover', () => {
-    //         if(box.innerText == "") {
-    //             let currentPlayer = getCurrentPlayer();
-    //             console.log("this");
-    //         }
-    //     })
-    // })
-
-
     //on click, call updateGameboard and update display
     function addMarker(id, player) {
         Gameboard.updateGameBoard(id, player.marker);
@@ -135,6 +142,7 @@ const gameController = (() => {         //build game controller with module patt
     //function to switch player
     function updateCurrentPlayer() {
         let temp = getCurrentPlayer();
+        playerTurnDisplay(temp.name);
         if(temp == player1) {
             currentPlayer = player2;
         } else {
@@ -142,10 +150,9 @@ const gameController = (() => {         //build game controller with module patt
         }
     }
 
-    function showMarker(id) {
-        let mark = getCurrentPlayer();
-        const box = document.getElementById(id);
-        console.log("working");
+    function playerTurnDisplay(player) {
+        let element = document.getElementById('playerTurn');
+        element.innerText = "It is " + player + "'s turn";
     }
 
     const playAgainButton = document.querySelector('#playAgain');

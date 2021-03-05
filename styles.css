@@ -2,23 +2,24 @@
 body {
     text-align: center;
     width: 100%;
-
+    background-color: rgb(18, 35, 68);
 }
 h1 {
-    font-size: 4em;
+    font-size: 6em;
+    color: #E3A55F;
 }
 #player1, #player2 {
     display: inline-block;
     font-size: 1.5em;
-    margin: 100px 20px 20px 20px;
+    margin: 0 20px 0 20px;
     padding: 10px 20px 10px 20px;
     border: solid 1px black;
 }
 #player1 {
-    background-color: green;
+    background-color: rgb(164, 201, 164);
 }
 #player2 {
-    background-color: red;
+    background-color: rgb(219, 144, 144);
 }
 #container {
     display: grid;
@@ -26,7 +27,7 @@ h1 {
     width: 480px;
     height: 480px;
     grid-template-columns: repeat(3, auto);
-    background-color: rgb(82, 71, 71);
+    background-color: #E3A55F;
     margin: 50px auto 0 auto;
 }
 .box {
@@ -35,10 +36,22 @@ h1 {
     line-height: 150px;
     width: 150px;
     height: 150px;
-    color:rgb(107, 104, 104);
-    background-color: white;
-    font-family: 'Fredoka One', cursive;    
+    color: #56709c;
+    background-color: rgb(18, 35, 68);
+    font-family: 'Fredoka One', cursive;  
 }
 .box:hover {
-    background-color: rgb(223, 215, 215);
+    background-color: rgb(30, 47, 80);
+    box-shadow: 0 0 20px 20px rgb(18, 35, 68) inset;
+
+}
+#message {
+    color: white;
+    font-size: 2em;
+    margin: 30px;
+}
+#playerTurn {
+    color: white;
+    font-size: 2em;
+    height: 2em;
 }
