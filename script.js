@@ -6,7 +6,7 @@ const Gameboard = (() => {     //build gameboard using module pattern
     const board = ["", "", "", "", "", "", "", "", ""];
     const container = document.getElementById('container');
     const getBoxClass = document.getElementsByClassName("box");
-    const setMessage = document.getElementById("counter");
+    const setMessage = document.getElementById("playerTurn");
 
     const buildGameBoard = () => {
         for(let i = 0; i < 9; i++) {
@@ -20,9 +20,8 @@ const Gameboard = (() => {     //build gameboard using module pattern
         for(let i = 0; i < board.length; i++) {
             board[i] = "";
             getBoxClass[i].innerText = board[i];
-            setMessage.innerText = "";
         };
-        console.log(board);
+            gameController.whoGoesFirst();
     };
     const getGameBoard = () => {
         return board;
@@ -59,12 +58,16 @@ const gameController = (() => {         //build game controller with module patt
         [3, 4, 5],
         [6, 7, 8],
     ];
-    console.log(winningValues);
     Gameboard.buildGameBoard();
+
     
+    let playerOneScore = 0;
+    let playerTwoScore = 0;
+
     const player1 = Player("Player 1", "X");
     const player2 = Player("Player 2", "O");
-    let currentPlayer = whoGoesFirst();            //'player1' or 'player2'
+    let currentPlayer;
+    whoGoesFirst();            //'player1' or 'player2'
     const box = document.querySelectorAll('.box');
     playerTurnDisplay(currentPlayer.name + " goes first!");
 
@@ -79,7 +82,12 @@ const gameController = (() => {         //build game controller with module patt
                 let isWinner = checkWin(currentPlayer.marker);
                 if(isWinner == true) {
                     playerTurnDisplay(currentPlayer.name + " won the game!")
-                    //message.innerText = currentPlayer.name + " won the game!";
+                    if(currentPlayer == player2) {
+                        playerTwoScore += 1;
+                    } else {
+                        playerOneScore += 1;
+                    }
+                    updateScore();
                 } 
                 else if(checkForTie() == true) {
                     playerTurnDisplay("It's a tie!")
@@ -121,6 +129,14 @@ const gameController = (() => {         //build game controller with module patt
             }
         }
     }
+    //set and update score display
+    const updateScore = () => {
+        let p1 = document.getElementById('player1');
+        let p2 = document.getElementById('player2');
+            p1.innerText = "Player 1: " + playerOneScore;
+            p2.innerText = "Player 2: " + playerTwoScore;
+    }
+    updateScore();
     //check if a winning value (set of 3) is in the current board
     function isTrue(arr, arr2){
         return arr.every(i => arr2.includes(i));
@@ -138,10 +154,11 @@ const gameController = (() => {         //build game controller with module patt
     function whoGoesFirst() {
         let num = Math.random() < 0.5;
         if(num) {
-            return player1;
+            currentPlayer = player1;
         } else {
-            return player2;
+            currentPlayer = player2;
         }
+        playerTurnDisplay(currentPlayer.name + " goes first!");
     }
     //function to switch player
     function updateCurrentPlayer() {
@@ -163,5 +180,5 @@ const gameController = (() => {         //build game controller with module patt
     playAgainButton.addEventListener('click', () => {
         Gameboard.resetBoard();
     });
-
+    return{playerTurnDisplay, whoGoesFirst, currentPlayer};
 })();
