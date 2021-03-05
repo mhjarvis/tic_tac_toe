@@ -45,13 +45,19 @@ h1 {
     box-shadow: 0 0 20px 20px rgb(18, 35, 68) inset;
 
 }
-#message {
+#counter {
     color: white;
     font-size: 2em;
     margin: 30px;
+    height: 2em;
 }
 #playerTurn {
     color: white;
     font-size: 2em;
     height: 2em;
+}
+#playAgain {
+    margin-top: 40px;
+    padding: 10px 30px 10px 30px;
+    font-size: 1.3em;
 }

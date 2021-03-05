@@ -6,6 +6,7 @@ const Gameboard = (() => {     //build gameboard using module pattern
     const board = ["", "", "", "", "", "", "", "", ""];
     const container = document.getElementById('container');
     const getBoxClass = document.getElementsByClassName("box");
+    const setMessage = document.getElementById("counter");
 
     const buildGameBoard = () => {
         for(let i = 0; i < 9; i++) {
@@ -19,6 +20,7 @@ const Gameboard = (() => {     //build gameboard using module pattern
         for(let i = 0; i < board.length; i++) {
             board[i] = "";
             getBoxClass[i].innerText = board[i];
+            setMessage.innerText = "";
         };
         console.log(board);
     };
@@ -64,9 +66,7 @@ const gameController = (() => {         //build game controller with module patt
     const player2 = Player("Player 2", "O");
     let currentPlayer = whoGoesFirst();            //'player1' or 'player2'
     const box = document.querySelectorAll('.box');
-    const message = document.getElementById('message');
-    playerTurnDisplay(currentPlayer.name);
-    message.innerText = " ";
+    playerTurnDisplay(currentPlayer.name + " goes first!");
 
     console.log(currentPlayer);
 
@@ -78,10 +78,11 @@ const gameController = (() => {         //build game controller with module patt
                 addMarker(box.id, currentPlayer);
                 let isWinner = checkWin(currentPlayer.marker);
                 if(isWinner == true) {
-                    message.innerText = currentPlayer.name + " won the game!";
+                    playerTurnDisplay(currentPlayer.name + " won the game!")
+                    //message.innerText = currentPlayer.name + " won the game!";
                 } 
                 else if(checkForTie() == true) {
-                    message.innerText = "It's a tie!";
+                    playerTurnDisplay("It's a tie!")
                 }
                 else {
                     updateCurrentPlayer();
@@ -91,6 +92,7 @@ const gameController = (() => {         //build game controller with module patt
             }
         })
     })
+    //check board array for any empty spaces; if none, it is a tie
     function checkForTie() {
         let board = Gameboard.getGameBoard();
         let tie = false;
@@ -102,6 +104,7 @@ const gameController = (() => {         //build game controller with module patt
             }
         }
     }
+    //compare current board state to win conditions
     function checkWin(marker) {
         let board = Gameboard.getGameBoard();
         let test = [];
@@ -118,6 +121,7 @@ const gameController = (() => {         //build game controller with module patt
             }
         }
     }
+    //check if a winning value (set of 3) is in the current board
     function isTrue(arr, arr2){
         return arr.every(i => arr2.includes(i));
       }
@@ -142,19 +146,19 @@ const gameController = (() => {         //build game controller with module patt
     //function to switch player
     function updateCurrentPlayer() {
         let temp = getCurrentPlayer();
-        playerTurnDisplay(temp.name);
         if(temp == player1) {
             currentPlayer = player2;
         } else {
             currentPlayer = player1;
         }
+        playerTurnDisplay("It is " + currentPlayer.name + "'s turn.");
     }
-
-    function playerTurnDisplay(player) {
+    //update html text with who is the current player
+    function playerTurnDisplay(display) {
         let element = document.getElementById('playerTurn');
-        element.innerText = "It is " + player + "'s turn";
+        element.innerText = display; //"It is " + player + "'s turn";
     }
-
+    //reset the game board
     const playAgainButton = document.querySelector('#playAgain');
     playAgainButton.addEventListener('click', () => {
         Gameboard.resetBoard();
