@@ -14,6 +14,7 @@ h1 {
     margin: 0 20px 0 20px;
     padding: 10px 20px 10px 20px;
     border: solid 1px black;
+    border-radius: 8px;
 }
 #player1 {
     background-color: rgb(164, 201, 164);

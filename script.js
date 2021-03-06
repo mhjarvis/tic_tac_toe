@@ -8,7 +8,7 @@ const Gameboard = (() => {     //build gameboard using module pattern
     const getBoxClass = document.getElementsByClassName("box");
     const setMessage = document.getElementById("playerTurn");
 
-    const buildGameBoard = () => {
+    const buildGameBoard = () => {      //build initial board
         for(let i = 0; i < 9; i++) {
             const div = document.createElement('div');
             container.appendChild(div);
@@ -58,18 +58,19 @@ const gameController = (() => {         //build game controller with module patt
         [3, 4, 5],
         [6, 7, 8],
     ];
-    Gameboard.buildGameBoard();
 
+    Gameboard.buildGameBoard();
     
     let playerOneScore = 0;
     let playerTwoScore = 0;
 
-    const player1 = Player("Player 1", "X");
-    const player2 = Player("Player 2", "O");
+    const player1 = Player(prompt("Enter Player One's name: "), "X");
+    const player2 = Player(prompt("Enter Player Two's name: "), "O");
     let currentPlayer;
     whoGoesFirst();            //'player1' or 'player2'
     const box = document.querySelectorAll('.box');
     playerTurnDisplay(currentPlayer.name + " goes first!");
+    
 
     console.log(currentPlayer);
 
@@ -103,14 +104,12 @@ const gameController = (() => {         //build game controller with module patt
     //check board array for any empty spaces; if none, it is a tie
     function checkForTie() {
         let board = Gameboard.getGameBoard();
-        let tie = false;
         for(let i = 0; i < 9; i++) {
             if(board[i] == "") {
-                return;
-            } else {
-                return true;
+                return false;
             }
         }
+        return true;
     }
     //compare current board state to win conditions
     function checkWin(marker) {
@@ -133,8 +132,8 @@ const gameController = (() => {         //build game controller with module patt
     const updateScore = () => {
         let p1 = document.getElementById('player1');
         let p2 = document.getElementById('player2');
-            p1.innerText = "Player 1: " + playerOneScore;
-            p2.innerText = "Player 2: " + playerTwoScore;
+            p1.innerText = player1.name + ": " + playerOneScore;
+            p2.innerText = player2.name + ": " + playerTwoScore;
     }
     updateScore();
     //check if a winning value (set of 3) is in the current board
@@ -180,5 +179,6 @@ const gameController = (() => {         //build game controller with module patt
     playAgainButton.addEventListener('click', () => {
         Gameboard.resetBoard();
     });
+    
     return{playerTurnDisplay, whoGoesFirst, currentPlayer};
 })();
